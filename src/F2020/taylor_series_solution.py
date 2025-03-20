@@ -5,13 +5,14 @@ Author: Raul Gomez
 Date: 2025-03-19
 Description: 
 """
-from _taylor_recurrence_relation import NUMBER_OF_INITIAL_COEFFICIENTS, NUMBER_OF_EXTRA_COEFFICIENTS, recurrence_relation
+from F2020._taylor_recurrence_relation import NUMBER_OF_INITIAL_COEFFICIENTS, NUMBER_OF_EXTRA_COEFFICIENTS, recurrence_relation
 
-from function_series import adjust_initial_coefficient_list, generate_coefficient_list, generate_function_series
-from function_series import taylor_function as term_function
+from F2020.function_series import adjust_initial_coefficient_list, generate_coefficient_list, generate_function_series
+from F2020.function_series import taylor_function as term_function
 
-from _input_handler import get_user_input
-from _output_handler import graph_generated_function
+from F2020._input_handler import get_user_input
+from F2020._output_handler import graph_generated_function
+
 
 def main():
     print("""

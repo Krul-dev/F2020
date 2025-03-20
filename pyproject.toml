@@ -1,0 +1,19 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "F2020"
+version = "0.1.0"
+description = "A project for solving differential equations using Taylor series."
+authors = [
+  { name = "Raul Gomez", email = "rgomez@tec.mx" }
+]
+dependencies = [
+  "numpy",
+  "matplotlib"
+]
+
+[project.scripts]
+taylor_series_solution = "F2020.taylor_series_solution:main"
