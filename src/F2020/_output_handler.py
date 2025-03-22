@@ -6,7 +6,8 @@ Date: 2025-03-19
 Description: 
 """
 
-#import matplotlib 
+import matplotlib 
+matplotlib.use('QtAgg')
 import matplotlib.pyplot as plt
 import numpy as np 
 

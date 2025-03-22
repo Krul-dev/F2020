@@ -12,7 +12,8 @@ authors = [
 ]
 dependencies = [
   "numpy",
-  "matplotlib"
+  "matplotlib",
+  "pyqt6",
 ]
 
 [project.scripts]
