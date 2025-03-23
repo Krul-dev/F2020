@@ -7,6 +7,7 @@ Description:
 """
 
 import sys
+
 import numpy as np
 import matplotlib.pyplot as plt
 from PyQt6.QtWidgets import (
