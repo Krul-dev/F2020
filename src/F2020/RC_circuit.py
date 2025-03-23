@@ -72,10 +72,10 @@ A capacitor is usually considered to be fully charged after waiting for 5 times 
         left_panel.addWidget(self.compute_button)
 
         # Result Display
-        self.result_label = QLabel("Maximum charge: ", self)
+        self.result_label = QLabel("Maximum Charge: ", self)
         left_panel.addWidget(self.result_label)
 
-        self.result2_label = QLabel("Time constant: ", self)
+        self.result2_label = QLabel("Time Constant: ", self)
         left_panel.addWidget(self.result2_label)
 
 
