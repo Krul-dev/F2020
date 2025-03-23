@@ -30,6 +30,6 @@ def graph_generated_function(f,xmin,xmax,number_of_required_coefficients):
     #fig.subplots_adjust(top=0.84,hspace=0.5, wspace=0.3)
 #    plt.pause(0.1)
 #    plt.show()
-    plt.tight_layout()
+    fig.tight_layout()
     plt.show(block=False)
 
