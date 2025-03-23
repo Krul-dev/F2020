@@ -67,7 +67,7 @@ A capacitor is usually considered to be fully charged after waiting for 5 times 
         left_panel.addLayout(form_layout)
 
         # Compute Button
-        self.compute_button = QPushButton("Submit", self)
+        self.compute_button = QPushButton("Submir", self)
         self.compute_button.clicked.connect(self.compute_temperature)
         left_panel.addWidget(self.compute_button)
 
