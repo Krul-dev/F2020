@@ -6,10 +6,10 @@ Date: 2025-03-19
 Description: 
 """
 
-NUMBER_OF_INITIAL_COEFFICIENTS = 2
-NUMBER_OF_EXTRA_COEFFICIENTS = 1 
+from numpy import exp, sin, cos, log, abs, sqrt 
+from scipy.special import factorial
 
-def recurrence_relation(k,required_coefficient_list):
-    next_coefficient = (required_coefficient_list[0])/(k * (k-1))
-    return next_coefficient
 
+def analytic_function(x):
+    y= exp(x)
+    return y

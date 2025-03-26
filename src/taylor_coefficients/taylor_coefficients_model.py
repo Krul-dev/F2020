@@ -35,8 +35,8 @@ def generate_taylor_approximation_function(initial_coefficient_list, number_of_r
     return taylor_approximation_function 
 
 
-# Define the TaylorSeriesModel class 
-class TaylorSeriesModel:
+# Define the TaylorCoefficientsModel class 
+class TaylorCoefficientsModel:
     def __init__(self, xmin, xmax, initial_coefficient_list, number_of_required_coefficients):
        # Set the default values for the time range and the x-axis limits
         self.xmin = xmin     

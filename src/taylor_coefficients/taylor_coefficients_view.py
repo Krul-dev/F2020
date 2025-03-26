@@ -76,20 +76,8 @@ class TaylorCoefficientsView(QWidget):
         self.xmax_line_edit = QLineEdit("5") 
         self.xmax_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
         input_form_layout.addRow(xmax_label, self.xmax_line_edit) # Add the label and input field to the layout 
-        self.coefficient_inputs = [] # Create a list to store the input widgets 
-        coefficient_input_labels = [
-            f"<p>c<sub>{k}</sub>:</p>" for k in range(NUMBER_OF_INITIAL_COEFFICIENTS)
-        ] # Labels for the input fields
-        default_values = ["0" for _ in range(NUMBER_OF_INITIAL_COEFFICIENTS)] # Default values for the input fields
-        for label, default_value in zip(coefficient_input_labels, default_values): # Add input fields to the form layout
-            lbl = QLabel(label, self) # Create a QLabel with the text
-            line_edit = QLineEdit(self) # Create a QLineEdit() widget 
-            line_edit.setValidator(QDoubleValidator())  # Only allow numeric input
-            line_edit.setText(default_value)  # Set default value
-            input_form_layout.addRow(lbl,line_edit) # Add the label and input field to the layout 
-            self.coefficient_inputs.append(line_edit)  # Store the input widget in the list
         number_of_required_coefficients_label = QLabel("<p>Número de coeficientes:</p>") # Create a QLabel for the number of coefficients input field 
-        self.number_of_required_coefficients_line_edit = QLineEdit(f"{NUMBER_OF_INITIAL_COEFFICIENTS}") # Create a QLineEdit() widget
+        self.number_of_required_coefficients_line_edit = QLineEdit("0") # Create a QLineEdit() widget
         self.number_of_required_coefficients_line_edit.setValidator(QIntValidator())  # Only allow numeric input 
         input_form_layout.addRow(number_of_required_coefficients_label, self.number_of_required_coefficients_line_edit) # Add the label and input field to the layout 
 
