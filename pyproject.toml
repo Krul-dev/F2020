@@ -18,6 +18,7 @@ dependencies = [
 
 [project.scripts]
 rc_circuit = "rc_circuit.rc_circuit_main:main"
+taylor_coefficients = "taylor_coefficients.taylor_coefficients_main:main"
 taylor_series = "taylor_series_solution.taylor_series_main:main"
 frobenius_series = "frobenius_series_solution.frobenius_series_main:main"
 
