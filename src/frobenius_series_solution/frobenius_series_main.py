@@ -7,20 +7,20 @@ Description:
 """
 import sys
 from PyQt6.QtWidgets import QApplication
-from taylor_series_solution.taylor_series_view import TaylorSeriesView
-from taylor_series_solution.taylor_series_controller import TaylorSeriesController
+from frobenius_series_solution.frobenius_series_view import FrobeniusSeriesView
+from frobenius_series_solution.frobenius_series_controller import FrobeniusSeriesController
 
 def main():
     app = QApplication(sys.argv)  # Initialize the application
 
     # Create an instance of the view
-    taylor_series_view = TaylorSeriesView()
+    frobenius_series_view = FrobeniusSeriesView()
 
     # Create the controller and connect it to the view
-    taylor_series_controller=TaylorSeriesController(taylor_series_view)
+    frobenius_series_controller=FrobeniusSeriesController(frobenius_series_view)
 
     # Show the view
-    taylor_series_view.show()
+    frobenius_series_view.show()
 
     # Start the application's event loop
     sys.exit(app.exec())
