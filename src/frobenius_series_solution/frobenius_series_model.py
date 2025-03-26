@@ -6,9 +6,8 @@ Date: 2025-03-22
 Description: 
 """
 
-import numpy as np
-
 from frobenius_series_solution._frobenius_recurrence_relation import (
+        R_INDEX,
         NUMBER_OF_EXTRA_COEFFICIENTS,
         recurrence_relation 
         )
@@ -19,7 +18,10 @@ from function_series import (
         generate_function_series
         )
 
-from function_series import taylor_function as term_function
+from function_series import generate_frobenius_function 
+
+# Define the term function 
+term_function = generate_frobenius_function(R_INDEX)
         
 
 
