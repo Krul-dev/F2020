@@ -8,7 +8,7 @@ Description:
 from PyQt6.QtWidgets import (
         QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QFormLayout, QFrame
         )
-from PyQt6.QtGui import QDoubleValidator
+from PyQt6.QtGui import QDoubleValidator, QIntValidator
 from PyQt6.QtCore import Qt
 
 
@@ -90,7 +90,7 @@ class FrobeniusSeriesView(QWidget):
             self.coefficient_inputs.append(line_edit)  # Store the input widget in the list
         number_of_required_coefficients_label = QLabel("<p>Número de coeficientes:</p>") # Create a QLabel for the number of coefficients input field 
         self.number_of_required_coefficients_line_edit = QLineEdit(f"{NUMBER_OF_INITIAL_COEFFICIENTS}") # Create a QLineEdit() widget
-        self.number_of_required_coefficients_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
+        self.number_of_required_coefficients_line_edit.setValidator(QIntValidator())  # Only allow numeric input 
         input_form_layout.addRow(number_of_required_coefficients_label, self.number_of_required_coefficients_line_edit) # Add the label and input field to the layout 
 
 
