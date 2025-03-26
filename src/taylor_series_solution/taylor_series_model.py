@@ -31,7 +31,8 @@ from function_series import taylor_function as term_function
 def generate_taylor_approximation_function(initial_coefficient_list, number_of_required_coefficients):
     # Adjust the initial coefficient list 
     adjusted_initial_coefficient_list = adjust_initial_coefficient_list(initial_coefficient_list, NUMBER_OF_EXTRA_COEFFICIENTS)
-    coefficient_list = generate_coefficient_list(recurrence_relation, adjusted_initial_coefficient_list, number_of_required_coefficients) 
+    extended_coefficient_list = generate_coefficient_list(recurrence_relation, adjusted_initial_coefficient_list, number_of_required_coefficients, NUMBER_OF_EXTRA_COEFFICIENTS) 
+    coefficient_list = extended_coefficient_list[NUMBER_OF_EXTRA_COEFFICIENTS:]
     taylor_approximation_function = generate_function_series(coefficient_list, term_function)
     return taylor_approximation_function 
 
