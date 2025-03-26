@@ -24,18 +24,19 @@ def adjust_initial_coefficient_list(initial_coefficient_list,number_of_extra_coe
 
 
 
-def generate_coefficient_list(recurrence_relation,adjusted_initial_coefficient_list,number_of_required_coefficients):
+def generate_coefficient_list(recurrence_relation,adjusted_initial_coefficient_list,number_of_required_coefficients,number_of_extra_coefficients):
     #initialize coefficient_list and set up the number of initial coefficients
-    coefficient_list = adjusted_initial_coefficient_list.copy()
-    number_of_initial_coefficients = len(adjusted_initial_coefficient_list)
+    extended_coefficient_list = adjusted_initial_coefficient_list.copy()
+    number_of_adjusted_initial_coefficients = len(adjusted_initial_coefficient_list)
+    number_of_initial_coefficients = number_of_adjusted_initial_coefficients - number_of_extra_coefficients
     
     #generate the remaining coefficients and append them to the coefficient_list
     for k in range(number_of_required_coefficients - number_of_initial_coefficients):
         next_coefficient=recurrence_relation(k + number_of_initial_coefficients, 
-        coefficient_list[k:k + number_of_initial_coefficients])
-        coefficient_list.append(next_coefficient)
+        extended_coefficient_list[k:k + number_of_initial_coefficients])
+        extended_coefficient_list.append(next_coefficient)
     
-    return coefficient_list
+    return extended_coefficient_list
 
 
 
