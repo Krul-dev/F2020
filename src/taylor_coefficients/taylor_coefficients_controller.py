@@ -10,7 +10,6 @@ import numpy as np
 
 from taylor_coefficients.taylor_coefficients_model import TaylorCoefficientsModel
 from taylor_coefficients.taylor_coefficients_view import TaylorCoefficientsView
-from taylor_coefficients._taylor_coefficients_formulas import NUMBER_OF_INITIAL_COEFFICIENTS
 
 # Controller class for the application
 class TaylorCoefficientsController:
@@ -47,15 +46,9 @@ class TaylorCoefficientsController:
             return None
 
         try:
-            initial_coefficient_list = [float(self.view.coefficient_inputs[k].text()) for k in range(NUMBER_OF_INITIAL_COEFFICIENTS)]
-        except ValueError:
-            self.show_error("Entrada inválida", "Por favor ingrese un número válido.") 
-            return None
-
-        try:
             number_of_required_coefficients = int(self.view.number_of_required_coefficients_line_edit.text())
-            if number_of_required_coefficients < NUMBER_OF_INITIAL_COEFFICIENTS:
-                self.show_error("Entrada inválida", f"El número de coeficientes requeridos debe ser mayor o igual a {NUMBER_OF_INITIAL_COEFFICIENTS}.")
+            if number_of_required_coefficients < 0:
+                self.show_error("Entrada inválida", f"El número de coeficientes requeridos debe ser mayor o igual a 0.")
                 return None
         except ValueError:
             self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
@@ -63,7 +56,7 @@ class TaylorCoefficientsController:
 
 
        
-        return xmin, xmax, initial_coefficient_list, number_of_required_coefficients
+        return xmin, xmax, number_of_required_coefficients
    
 
     # Subroutine to update the view with the model values
@@ -74,21 +67,24 @@ class TaylorCoefficientsController:
         xmax = taylor_coefficients_model.get_xmax()
         number_of_required_coefficients = taylor_coefficients_model.get_number_of_required_coefficients()
         taylor_approximation_function = taylor_coefficients_model.get_taylor_approximation_function()
-        
+        analytic_function = taylor_coefficients_model.get_analytic_function()
 
         # Plot the charge as a function of time 
-        self.plot_taylor_approximation_function(taylor_approximation_function, xmin, xmax, number_of_required_coefficients)
+        self.plot_taylor_approximation_function(taylor_approximation_function,analytic_function, xmin, xmax, number_of_required_coefficients)
 
 
-    def plot_taylor_approximation_function(self, taylor_approximation_function, xmin, xmax, number_of_required_coefficients):
+    def plot_taylor_approximation_function(self, taylor_approximation_function, analytic_function, xmin, xmax, number_of_required_coefficients):
         # Generate the data for the charge curve
         x_data = np.linspace(xmin, xmax, 1000)
-        y_data= taylor_approximation_function(x_data) 
+        y_taylor_data= taylor_approximation_function(x_data) 
+        y_analytic_data= analytic_function(x_data)
 
-        # Plot the charge curve
+        # Plot the taylor approximation curve
         self.view.ax.clear()  # Clear the current plot
-        self.view.ax.plot(x_data, y_data, label=fr"$y = T_{{{number_of_required_coefficients-1}}}f(x)$")
+        self.view.ax.plot(x_data, y_taylor_data, label=fr"$y = T_{{{number_of_required_coefficients-1}}}f(x)$")
 
+        # Plot the analytic curve
+        self.view.ax.plot(x_data, y_analytic_data, label=fr"$y = f(x)$")
 
 
         # Update the plot labels
@@ -114,10 +110,10 @@ class TaylorCoefficientsController:
             return
 
         # Get the user inputs 
-        xmin, xmax, initial_coefficient_list, number_of_required_coefficients = inputs
+        xmin, xmax, number_of_required_coefficients = inputs
 
         # Create a new model with the user inputs
-        taylor_coefficients_model = TaylorCoefficientsModel(xmin, xmax, initial_coefficient_list, number_of_required_coefficients)
+        taylor_coefficients_model = TaylorCoefficientsModel(xmin, xmax, number_of_required_coefficients)
 
         # Update the view with the new model values
         self.update_view(taylor_coefficients_model)

@@ -16,8 +16,6 @@ from PyQt6.QtCore import Qt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
-from taylor_coefficients._taylor_coefficients_formulas import NUMBER_OF_INITIAL_COEFFICIENTS
-
 
 class TaylorCoefficientsView(QWidget):
     def __init__(self):
