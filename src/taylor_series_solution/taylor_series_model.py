@@ -8,61 +8,42 @@ Description:
 
 import numpy as np
 
+from taylor_series_solution._taylor_recurrence_relation import (
+        NUMBER_OF_EXTRA_COEFFICIENTS,
+        recurrence_relation 
+        )
+
+from function_series import (
+        adjust_initial_coefficient_list,
+        generate_coefficient_list,
+        generate_function_series
+        )
+
+from function_series import taylor_function as term_function
+        
+
 
 # Define the functions to compute the dependent variables
 
-# Function to compute the max charge 
-def compute_max_charge(capacitance, input_voltage):
-    C = capacitance 
-    epsilon = input_voltage 
-    max_charge = epsilon * C
-    return max_charge
 
-# Function to compute the time constant 
-def compute_time_constant(capacitance, resistance):
-    C = capacitance 
-    R = resistance 
-    time_constant = R * C 
-    return time_constant
 
-# Function to generate the charge function 
-def generate_charge_function(capacitance, resistance, input_voltage):
-    def charge_function(time):
-        C = capacitance
-        R = resistance
-        epsilon = input_voltage
-        t = time
-        charge = epsilon * C * (1 - np.exp(-t / (R * C)))
-        return charge
-    return charge_function
+# Function to generate the Taylor approximation function 
+def generate_taylor_approximation_function(initial_coefficient_list, number_of_required_coefficients):
+    # Adjust the initial coefficient list 
+    adjusted_initial_coefficient_list = adjust_initial_coefficient_list(initial_coefficient_list, NUMBER_OF_EXTRA_COEFFICIENTS)
+    coefficient_list = generate_coefficient_list(recurrence_relation, adjusted_initial_coefficient_list, number_of_required_coefficients) 
+    taylor_approximation_function = generate_function_series(coefficient_list, term_function)
+    return taylor_approximation_function 
 
 
 # Define the TaylorSeriesModel class 
 class TaylorSeriesModel:
-    def __init__(self, capacitance, resistance, input_voltage):
-        # Set the values of the capacitance, resistance, and input voltage (Independent variables)
-        self.capacitance = capacitance 
-        self.resistance = resistance
-        self.input_voltage = input_voltage
-
-        # Calculate the max charge, time constant and charge function (Dependent variables)
-        self.max_charge = compute_max_charge(capacitance, input_voltage)
-        self.time_constant = compute_time_constant(capacitance, resistance)
-        self.charge_function = generate_charge_function(capacitance, resistance, input_voltage)
-
-        # Set the default values for the time range and the x-axis limits
-        self.xmin = 0 
-        self.xmax = 5 * self.time_constant
-
-    # Define the methods to get the dependent variables
-    def get_max_charge(self):
-        return self.max_charge
-
-    def get_time_constant(self):
-        return self.time_constant
-
-    def get_charge_function(self):
-        return self.charge_function 
+    def __init__(self, xmin, xmax, initial_coefficient_list, number_of_required_coefficients):
+       # Set the default values for the time range and the x-axis limits
+        self.xmin = xmin     
+        self.xmax = xmax
+        self.number_of_required_coefficients = number_of_required_coefficients
+        self.taylor_approximation_function = generate_taylor_approximation_function(initial_coefficient_list, number_of_required_coefficients)
 
     # Define the methods to get the x-axis limits 
     def get_xmin(self):
@@ -71,3 +52,8 @@ class TaylorSeriesModel:
     def get_xmax(self): 
         return self.xmax 
 
+    def get_number_of_required_coefficients(self):
+        return self.number_of_required_coefficients
+
+    def get_taylor_approximation_function(self):
+        return self.taylor_approximation_function

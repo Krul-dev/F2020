@@ -6,9 +6,11 @@ Date: 2025-03-22
 Description: 
 """
 from PyQt6.QtWidgets import QMessageBox
+import numpy as np
+
 from taylor_series_solution.taylor_series_model import TaylorSeriesModel
 from taylor_series_solution.taylor_series_view import TaylorSeriesView
-import numpy as np
+from taylor_series_solution._taylor_recurrence_relation import NUMBER_OF_INITIAL_COEFFICIENTS
 
 # Controller class for the application
 class TaylorSeriesController:
@@ -30,71 +32,71 @@ class TaylorSeriesController:
 
         # Validate capacitance
         try:
-            capacitance = float(self.view.inputs["<p>Capacitance:</p>"].text())
-            if capacitance <= 0:
-                self.show_error("Invalid input", "Capacitance must be a positive number.")
-                return None
+            xmin = float(self.view.xmin_line_edit.text())
         except ValueError:
-            self.show_error("Invalid input", "Please enter a valid number.")
+            self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
             return None
 
-        # Validate resistance 
-        try: 
-            resistance = float(self.view.inputs["<p>Resistance:</p>"].text())
-            if resistance <= 0:
-                self.show_error("Invalid input", "Resistance must be a positive number.")
-                return None
-        except ValueError:
-            self.show_error("Invalid input", "Please enter a valid number.")
-            return None 
-
-        # Validate input voltage 
         try:
-            input_voltage = float(self.view.inputs["<p>Input Voltage:</p>"].text())
-            if input_voltage <= 0:
-                self.show_error("Invalid input", "Input voltage must be a positive number.")
+            xmax= float(self.view.xmax_line_edit.text())
+            if xmax <= xmin:
+                self.show_error("Entrada inválida", "El valor de máximo de x debe ser mayor que el valor mínimo de x.")
                 return None 
         except ValueError:
-            self.show_error("Invalid input", "Please enter a valid number.")
+            self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
             return None
-        
-        return capacitance, resistance, input_voltage
+
+        try:
+            initial_coefficient_list = [float(self.view.coefficient_inputs[k].text()) for k in range(NUMBER_OF_INITIAL_COEFFICIENTS)]
+        except ValueError:
+            self.show_error("Entrada inválida", "Por favor ingrese un número válido.") 
+            return None
+
+        try:
+            number_of_required_coefficients = int(self.view.number_of_required_coefficients_line_edit.text())
+            if number_of_required_coefficients < NUMBER_OF_INITIAL_COEFFICIENTS:
+                self.show_error("Entrada inválida", f"El número de coeficientes requeridos debe ser mayor o igual a {NUMBER_OF_INITIAL_COEFFICIENTS}.")
+                return None
+        except ValueError:
+            self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
+            return None
+
+
+       
+        return xmin, xmax, initial_coefficient_list, number_of_required_coefficients
    
 
     # Subroutine to update the view with the model values
     def update_view(self,taylor_series_model):
         # Update the view with the current model values 
         # Get the results from the model 
-        max_charge = taylor_series_model.get_max_charge()
-        time_constant = taylor_series_model.get_time_constant()
-        charge_function = taylor_series_model.get_charge_function()
         xmin = taylor_series_model.get_xmin()
         xmax = taylor_series_model.get_xmax()
-
-        # Update the maximum charge and time constant labels
-        self.view.maximum_charge_label.setText(f"{max_charge:}") # update the maximum charge label 
-        self.view.time_constant_label.setText(f"{time_constant:}") # update the time constant label 
+        number_of_required_coefficients = taylor_series_model.get_number_of_required_coefficients()
+        taylor_approximation_function = taylor_series_model.get_taylor_approximation_function()
+        
 
         # Plot the charge as a function of time 
-        self.plot_charge_curve(charge_function, max_charge, xmin, xmax)
+        self.plot_taylor_approximation_function(taylor_approximation_function, xmin, xmax, number_of_required_coefficients)
 
 
-    def plot_charge_curve(self, charge_function, max_charge, xmin, xmax):
+    def plot_taylor_approximation_function(self, taylor_approximation_function, xmin, xmax, number_of_required_coefficients):
         # Generate the data for the charge curve
-        time_data = np.linspace(xmin, xmax, 100)
-        charge_data = charge_function(time_data) 
-        max_charge_data = np.full_like(time_data, max_charge)
+        x_data = np.linspace(xmin, xmax, 1000)
+        y_data= taylor_approximation_function(x_data) 
 
         # Plot the charge curve
         self.view.ax.clear()  # Clear the current plot
-        self.view.ax.plot(time_data, charge_data, label="Capacitor Charge")
-        self.view.ax.plot(time_data, max_charge_data, label="Maximum Charge")
+        self.view.ax.plot(x_data, y_data, label=fr"$y = T_{{{number_of_required_coefficients-1}}}(x)$")
+
+
 
         # Update the plot labels
-        self.view.ax.set_title("Capacitor Charge vs. Time", pad=20)
-        self.view.ax.set_xlabel("Time", labelpad=5)
-        self.view.ax.set_ylabel("Charge", labelpad=10)
+        self.view.ax.set_title(fr"Gráfica de la solución obtenida utilizando series de taylor con ${number_of_required_coefficients}$ coeficientes", pad=20)
+        self.view.ax.set_xlabel("x", labelpad=5)
+        self.view.ax.set_ylabel("y", labelpad=10)
         self.view.ax.legend()
+
         self.view.canvas.draw()
 
     def show_error(self, title, message):
@@ -112,10 +114,10 @@ class TaylorSeriesController:
             return
 
         # Get the user inputs 
-        capacitance, resistance, input_voltage = inputs
+        xmin, xmax, initial_coefficient_list, number_of_required_coefficients = inputs
 
         # Create a new model with the user inputs
-        taylor_series_model = TaylorSeriesModel(capacitance, resistance, input_voltage)
+        taylor_series_model = TaylorSeriesModel(xmin, xmax, initial_coefficient_list, number_of_required_coefficients)
 
         # Update the view with the new model values
         self.update_view(taylor_series_model)
