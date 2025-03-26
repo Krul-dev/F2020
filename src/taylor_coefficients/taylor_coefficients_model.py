@@ -53,3 +53,7 @@ class TaylorCoefficientsModel:
 
     def get_taylor_approximation_function(self):
         return self.taylor_approximation_function
+
+    def get_analytic_function(self):
+        return self.analytic_function 
+

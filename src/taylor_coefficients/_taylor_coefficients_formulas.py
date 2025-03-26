@@ -11,9 +11,13 @@ from scipy.special import factorial
 
 
 def Analytic_Function(x):
-    y= exp(x)
+    y=sin(x)
+
     return y
 
 def Taylor_Coefficient_Function(k):
-    c_k = 1/factorial(k)
+    if k%2==0:
+        c_k = 0 
+    else:
+        c_k = (-1)**((k-1)/2)/factorial(k)
     return c_k
