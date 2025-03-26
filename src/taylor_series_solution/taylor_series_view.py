@@ -78,7 +78,6 @@ class TaylorSeriesView(QWidget):
         self.xmax_line_edit = QLineEdit("5") 
         self.xmax_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
         input_form_layout.addRow(xmax_label, self.xmax_line_edit) # Add the label and input field to the layout 
-        left_panel.addLayout(input_form_layout) # Add the form layout to the left panel 
         self.coefficient_inputs = [] # Create a list to store the input widgets 
         coefficient_input_labels = [
             f"<p>c<sub>{k}</sub>:</p>" for k in range(NUMBER_OF_INITIAL_COEFFICIENTS)
