@@ -6,14 +6,14 @@ Date: 2025-03-22
 Description: 
 """
 from PyQt6.QtWidgets import QMessageBox
-from taylor_series_solution.taylor_series_model import TaylorSeriesModel
-from taylor_series_solution.taylor_series_view import TaylorSeriesView
+from rc_circuit.rc_circuit_model import RCCircuitModel
+from rc_circuit.rc_circuit_view import RCCircuitView
 import numpy as np
 
 # Controller class for the application
-class TaylorSeriesController:
+class RCCircuitController:
     # Define the constructor
-    def __init__(self, view : TaylorSeriesView):
+    def __init__(self, view : RCCircuitView):
         # Initialize the controller with the view
         self.view = view
 
@@ -62,14 +62,14 @@ class TaylorSeriesController:
    
 
     # Subroutine to update the view with the model values
-    def update_view(self,taylor_series_model):
+    def update_view(self,rc_circuit_model):
         # Update the view with the current model values 
         # Get the results from the model 
-        max_charge = taylor_series_model.get_max_charge()
-        time_constant = taylor_series_model.get_time_constant()
-        charge_function = taylor_series_model.get_charge_function()
-        xmin = taylor_series_model.get_xmin()
-        xmax = taylor_series_model.get_xmax()
+        max_charge = rc_circuit_model.get_max_charge()
+        time_constant = rc_circuit_model.get_time_constant()
+        charge_function = rc_circuit_model.get_charge_function()
+        xmin = rc_circuit_model.get_xmin()
+        xmax = rc_circuit_model.get_xmax()
 
         # Update the maximum charge and time constant labels
         self.view.maximum_charge_label.setText(f"{max_charge:}") # update the maximum charge label 
@@ -115,10 +115,10 @@ class TaylorSeriesController:
         capacitance, resistance, input_voltage = inputs
 
         # Create a new model with the user inputs
-        taylor_series_model = TaylorSeriesModel(capacitance, resistance, input_voltage)
+        rc_circuit_model = RCCircuitModel(capacitance, resistance, input_voltage)
 
         # Update the view with the new model values
-        self.update_view(taylor_series_model)
+        self.update_view(rc_circuit_model)
 
 
 

@@ -7,20 +7,20 @@ Description:
 """
 import sys
 from PyQt6.QtWidgets import QApplication
-from taylor_series_solution.taylor_series_view import TaylorSeriesView
-from taylor_series_solution.taylor_series_controller import TaylorSeriesController
+from rc_circuit.rc_circuit_view import RCCircuitView
+from rc_circuit.rc_circuit_controller import RCCircuitController
 
 def main():
     app = QApplication(sys.argv)  # Initialize the application
 
     # Create an instance of the view
-    taylor_series_view = TaylorSeriesView()
+    rc_circuit_view = RCCircuitView()
 
     # Create the controller and connect it to the view
-    taylor_series_controller=TaylorSeriesController(taylor_series_view)
+    rc_circuit_controller=RCCircuitController(rc_circuit_view)
 
     # Show the view
-    taylor_series_view.show()
+    rc_circuit_view.show()
 
     # Start the application's event loop
     sys.exit(app.exec())
