@@ -87,7 +87,7 @@ class FrobeniusSeriesController:
 
         # Plot the charge curve
         self.view.ax.clear()  # Clear the current plot
-        self.view.ax.plot(x_data, y_data, label=fr"$y = F_{{{number_of_required_coefficients-1}}}(x)$")
+        self.view.ax.plot(x_data, y_data, label=fr"$y = F_{{{number_of_required_coefficients-1}}}f(x)$")
 
 
 
