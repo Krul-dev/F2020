@@ -5,12 +5,10 @@ Author: Raul Gomez
 Date: 2025-03-21
 Description: 
 """
-from pathlib import Path
-
 from PyQt6.QtWidgets import (
         QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QFormLayout, QFrame
         )
-from PyQt6.QtGui import QDoubleValidator, QPixmap
+from PyQt6.QtGui import QDoubleValidator
 from PyQt6.QtCore import Qt
 
 
@@ -49,7 +47,7 @@ class FrobeniusSeriesView(QWidget):
             <h2>Instrucciones</h2>
             <p>Esta aplicación nos muestra la gráfica de la solución aproximada a nuestra ecuación diferencial utilizando series de Frobenius.</p>
             <p> Para generar la gráfica, necesitamos el rango de los valores de <i>x</i>, los coeficientes iniciales y el número de coeficientes requeridos.</p>
-            <p> Usando la relación de recurrencia y los valores de los coeficientes iniciales, este programa calcula el número de coeficientes requeridos para generar una aproximación a nuestra solución a la ecuación diferencial utilizando series de Frobenius.</p>
+            <p> Usando el índice obtenido al resolver la ecuación indicial, la relación de recurrencia y los valores de los coeficientes iniciales, este programa calcula el número de coeficientes requeridos para generar una aproximación a nuestra solución a la ecuación diferencial utilizando series de Frobenius.</p>
             """                                            # Text with instructions to display in the left panel
         instructions_label= QLabel(left_text)                     # Create a QLabel with the text
         instructions_label.setAlignment(Qt.AlignmentFlag.AlignTop) # Align the text to the top

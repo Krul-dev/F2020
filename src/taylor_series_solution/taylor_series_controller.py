@@ -92,7 +92,7 @@ class TaylorSeriesController:
 
 
         # Update the plot labels
-        self.view.ax.set_title(fr"Gráfica de la solución obtenida utilizando series de taylor con ${number_of_required_coefficients}$ coeficientes", pad=20)
+        self.view.ax.set_title(fr"Gráfica de la solución obtenida utilizando series de Taylor con ${number_of_required_coefficients}$ coeficientes", pad=20)
         self.view.ax.set_xlabel("x", labelpad=10)
         self.view.ax.set_ylabel("y", labelpad=10)
         self.view.ax.legend()
