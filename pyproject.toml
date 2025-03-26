@@ -18,3 +18,4 @@ dependencies = [
 
 [project.scripts]
 taylor_series_solution = "F2020.taylor_series_solution:main"
+taylor_series_main = "taylor_series_solution.taylor_series_main:main"
