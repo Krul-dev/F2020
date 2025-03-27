@@ -17,7 +17,7 @@ from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 
-class TaylorCoefficientsView(QWidget):
+class HeatEquationView(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()

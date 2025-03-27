@@ -8,13 +8,13 @@ Description:
 from PyQt6.QtWidgets import QMessageBox
 import numpy as np
 
-from taylor_coefficients.taylor_coefficients_model import TaylorCoefficientsModel
-from taylor_coefficients.taylor_coefficients_view import TaylorCoefficientsView
+from heat_equation.heat_equation_model import HeatEquationModel
+from heat_equation.heat_equation_view import HeatEquationView
 
 # Controller class for the application
-class TaylorCoefficientsController:
+class HeatEquationController:
     # Define the constructor
-    def __init__(self, view : TaylorCoefficientsView):
+    def __init__(self, view : HeatEquationView):
         # Initialize the controller with the view
         self.view = view
 
@@ -60,14 +60,14 @@ class TaylorCoefficientsController:
    
 
     # Subroutine to update the view with the model values
-    def update_view(self,taylor_coefficients_model):
+    def update_view(self,heat_equation_model):
         # Update the view with the current model values 
         # Get the results from the model 
-        xmin = taylor_coefficients_model.get_xmin()
-        xmax = taylor_coefficients_model.get_xmax()
-        number_of_required_coefficients = taylor_coefficients_model.get_number_of_required_coefficients()
-        taylor_approximation_function = taylor_coefficients_model.get_taylor_approximation_function()
-        analytic_function = taylor_coefficients_model.get_analytic_function()
+        xmin = heat_equation_model.get_xmin()
+        xmax = heat_equation_model.get_xmax()
+        number_of_required_coefficients = heat_equation_model.get_number_of_required_coefficients()
+        taylor_approximation_function = heat_equation_model.get_taylor_approximation_function()
+        analytic_function = heat_equation_model.get_analytic_function()
 
         # Plot the charge as a function of time 
         self.plot_taylor_approximation_function(taylor_approximation_function,analytic_function, xmin, xmax, number_of_required_coefficients)
@@ -118,10 +118,10 @@ class TaylorCoefficientsController:
         xmin, xmax, number_of_required_coefficients = inputs
 
         # Create a new model with the user inputs
-        taylor_coefficients_model = TaylorCoefficientsModel(xmin, xmax, number_of_required_coefficients)
+        heat_equation_model = HeatEquationModel(xmin, xmax, number_of_required_coefficients)
 
         # Update the view with the new model values
-        self.update_view(taylor_coefficients_model)
+        self.update_view(heat_equation_model)
 
 
 
