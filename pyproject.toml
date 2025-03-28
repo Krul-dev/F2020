@@ -23,4 +23,5 @@ taylor_coefficients = "taylor_coefficients.taylor_coefficients_main:main"
 taylor_series = "taylor_series_solution.taylor_series_main:main"
 frobenius_series = "frobenius_series_solution.frobenius_series_main:main"
 heat_equation = "heat_equation.heat_equation_main:main"
+wave_equation = "wave_equation.wave_equation_main:main"
 

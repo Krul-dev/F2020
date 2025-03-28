@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Author: Raul Gomez
+Date: 2025-03-21
+Description: 
+"""
+from PyQt6.QtWidgets import (
+        QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QFormLayout, QFrame
+        )
+from PyQt6.QtGui import QDoubleValidator, QIntValidator
+from PyQt6.QtCore import Qt
+
+
+
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+import matplotlib.pyplot as plt
+
+
+class WaveEquationView(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        # Sets the Title and Geometry of the window
+        self.setWindowTitle("La ecuación del calor")              # Set the window title
+        self.setFixedSize(1200, 700)                   # Width: 1200, Height: 700
+        #self.setGeometry(100, 100, 1200, 700)         # Set the window geometry (x, y, width, height)
+
+        # Main Layout 
+        main_layout = QHBoxLayout() # Create a horizontal layout 
+
+        # Left panel - Instructions, input fields and results
+        left_panel = QVBoxLayout() # Create a vertical layout 
+        left_panel.setAlignment(Qt.AlignmentFlag.AlignTop)  # Align everything in the left panel to the top
+
+
+        # Right panel - Image and plot 
+        right_panel = QVBoxLayout() # Create a vertical layout 
+        right_panel.setAlignment(Qt.AlignmentFlag.AlignTop)  # Align everything in the left panel to the top
+
+        # Add a QLabel with instructions to the left panel
+        left_text = """  
+            <h2>Instrucciones</h2>
+            <p>Esta aplicación nos muestra la evolución de la ecuación del calor sobre una barra. </p>
+            <p>Para iniciar la animación basta con ingresar el valor del tiempo final (el tiempo inicial siempre será igual a 0) y el número de coeficientes que deseamos utilizar en nuestra aproximación</p>
+            """                                            # Text with instructions to display in the left panel
+        instructions_label= QLabel(left_text)                     # Create a QLabel with the text
+        instructions_label.setAlignment(Qt.AlignmentFlag.AlignTop) # Align the text to the top
+        instructions_label.setWordWrap(True)                       # Enable text wrapping
+        left_panel.addWidget(instructions_label)                 # Add the QLabel to the left panel 
+
+        # Add a QFrame separator to the left panel 
+        separator1 = QFrame()
+        separator1.setFrameShape(QFrame.Shape.HLine)       # Horizontal line separator
+        separator1.setFrameShadow(QFrame.Shadow.Sunken)    # Make it sunken 
+        left_panel.addWidget(separator1)                   # Add the separator to the layout 
+
+        # Add an QLabel asking for input data to the left panel       
+        input_label= QLabel("""<h2>Datos de Entrada</h2>""") # Create a QLabel with the Text
+        left_panel.addWidget(input_label) # Add the QLabel to the left panel 
+
+
+        # Add a form layout to the left panel to display the input fields 
+        input_form_layout = QFormLayout() # Create a form layout
+        input_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
+        xmin_label = QLabel("<p>Tiempo inicial:</p>") # Create a QLabel for the xmin input field 
+        self.xmin_fixed_label = QLabel("0")
+        input_form_layout.addRow(xmin_label, self.xmin_fixed_label) # Add the label and input field to the layout 
+        xmax_label = QLabel("<p>Tiempo final:</p>") # Create a QLabel for the xmax input field 
+        self.xmax_line_edit = QLineEdit("5") 
+        self.xmax_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
+        input_form_layout.addRow(xmax_label, self.xmax_line_edit) # Add the label and input field to the layout 
+        number_of_required_coefficients_label = QLabel("<p>Número de coeficientes:</p>") # Create a QLabel for the number of coefficients input field 
+        self.number_of_required_coefficients_line_edit = QLineEdit("0") # Create a QLineEdit() widget
+        self.number_of_required_coefficients_line_edit.setValidator(QIntValidator())  # Only allow numeric input 
+        input_form_layout.addRow(number_of_required_coefficients_label, self.number_of_required_coefficients_line_edit) # Add the label and input field to the layout 
+
+
+        # Add a submit button to the form layout
+        self.submit_button = QPushButton("Calcular")  # Create a QPushButton
+        # self.submit_button.setObjectName("Submit")  # Set the object name to "Submit"
+        input_form_layout.addRow(self.submit_button)      # Add the button to the layout
+        left_panel.addLayout(input_form_layout) # Add the form layout to the left panel
+
+        # Add a matplotlib plot to the right panel       
+        self.fig, self.ax = plt.subplots(figsize=(12, 8)) # Create a figure and axis
+        self.canvas = FigureCanvas(self.fig)             # Create a canvas to display the figure 
+        right_panel.addWidget(self.canvas)                  # Add the canvas to the layout
+
+
+        # Add the panels to the main layout to display them in the window 
+        main_layout.addLayout(left_panel,2)               # Add the left panel to the main layout
+        separator4 = QFrame()                             # Create a QFrame
+        separator4.setFrameShape(QFrame.Shape.VLine)      # Vertical line separator
+        separator4.setFrameShadow(QFrame.Shadow.Sunken)   # Make it sunken (optional)
+        main_layout.addWidget(separator4)                 # Add the separator to the layout 
+        main_layout.addLayout(right_panel,4)              # Add the right panel to the main layout 
+        self.setLayout(main_layout)                       # Set the main layout to the window 
+
+
