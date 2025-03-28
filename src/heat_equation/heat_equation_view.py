@@ -24,7 +24,7 @@ class HeatEquationView(QWidget):
 
     def initUI(self):
         # Sets the Title and Geometry of the window
-        self.setWindowTitle("Aproximaciones con series de Taylor")              # Set the window title
+        self.setWindowTitle("La ecuación del calor")              # Set the window title
         self.setFixedSize(1200, 700)                   # Width: 1200, Height: 700
         #self.setGeometry(100, 100, 1200, 700)         # Set the window geometry (x, y, width, height)
 
@@ -43,8 +43,8 @@ class HeatEquationView(QWidget):
         # Add a QLabel with instructions to the left panel
         left_text = """  
             <h2>Instrucciones</h2>
-            <p>Esta aplicación nos muestra la gráfica de dos funciones. La primera es la función analítica que deben de aproximar y la segunda es su aproximación utilizando series de Taylor.</p>
-            <p> Para generar la gráfica, necesitamos el rango de los valores de <i>x</i> y el número de coeficientes que se utilizarán en la aproximación por series de Taylor.</p>
+            <p>Esta aplicación nos muestra la evolución de la ecuación del calor sobre una barra. </p>
+            <p>Para iniciar la animación basta con ingresar el valor del tiempo final (el tiempo inicial siempre será igual a 0) y el número de coeficientes que deseamos utilizar en nuestra aproximación</p>
             """                                            # Text with instructions to display in the left panel
         instructions_label= QLabel(left_text)                     # Create a QLabel with the text
         instructions_label.setAlignment(Qt.AlignmentFlag.AlignTop) # Align the text to the top
@@ -65,11 +65,10 @@ class HeatEquationView(QWidget):
         # Add a form layout to the left panel to display the input fields 
         input_form_layout = QFormLayout() # Create a form layout
         input_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        xmin_label = QLabel("<p>Valor mínimo de x:</p>") # Create a QLabel for the xmin input field 
-        self.xmin_line_edit = QLineEdit("-5")
-        self.xmin_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
-        input_form_layout.addRow(xmin_label, self.xmin_line_edit) # Add the label and input field to the layout 
-        xmax_label = QLabel("<p>Valor máximo de x:</p>") # Create a QLabel for the xmax input field 
+        xmin_label = QLabel("<p>Tiempo inicial:</p>") # Create a QLabel for the xmin input field 
+        self.xmin_fixed_label = QLabel("0")
+        input_form_layout.addRow(xmin_label, self.xmin_fixed_label) # Add the label and input field to the layout 
+        xmax_label = QLabel("<p>Tiempo final:</p>") # Create a QLabel for the xmax input field 
         self.xmax_line_edit = QLineEdit("5") 
         self.xmax_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
         input_form_layout.addRow(xmax_label, self.xmax_line_edit) # Add the label and input field to the layout 

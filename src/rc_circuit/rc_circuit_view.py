@@ -70,6 +70,7 @@ class RCCircuitView(QWidget):
 
         # Add a form layout to the left panel to display the input fields 
         input_form_layout = QFormLayout() # Create a form layout
+        input_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         self.inputs = {} # Create a dictionary to store the input widgets 
         input_labels = [
             "<p>Capacitance:</p>", "<p>Resistance:</p>", "<p>Input Voltage:</p>"
@@ -106,6 +107,7 @@ class RCCircuitView(QWidget):
 
         # Add a form layout to the left panel to display the results 
         results_form_layout = QFormLayout() # Create a form Layout
+        results_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
         self.maximum_charge_label = QLabel() # Create a QLabel to display the maximum charge
         self.time_constant_label = QLabel() # Create a QLabel to display the time constant
         results_form_layout.addRow(QLabel("""<p>Maximum Charge:</p>"""),self.maximum_charge_label) 

@@ -8,8 +8,19 @@ Description:
 from PyQt6.QtWidgets import QMessageBox
 import numpy as np
 
+from matplotlib.animation import FuncAnimation
+import matplotlib.colors as mcolors
+from matplotlib.collections import LineCollection
+
 from heat_equation.heat_equation_model import HeatEquationModel
 from heat_equation.heat_equation_view import HeatEquationView
+
+
+# Define the colormap for the plot 
+colors = [(0, 1, 1), (0, 0, 0), (1, 0, 0)] # Cyan -> Black -> Red
+cmap = mcolors.LinearSegmentedColormap.from_list("CustomRedCyan", colors)
+
+
 
 # Controller class for the application
 class HeatEquationController:
@@ -31,15 +42,15 @@ class HeatEquationController:
 
         # Validate capacitance
         try:
-            xmin = float(self.view.xmin_line_edit.text())
+            tmin = 0
         except ValueError:
             self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
             return None
 
         try:
-            xmax= float(self.view.xmax_line_edit.text())
-            if xmax <= xmin:
-                self.show_error("Entrada inválida", "El valor de máximo de x debe ser mayor que el valor mínimo de x.")
+            tmax= float(self.view.xmax_line_edit.text())
+            if tmax <= tmin:
+                self.show_error("Entrada inválida", "El tiempor final debe ser mayor que el tiempo inicial.") 
                 return None 
         except ValueError:
             self.show_error("Entrada inválida", "Por favor ingrese un número válido.")
@@ -56,48 +67,65 @@ class HeatEquationController:
 
 
        
-        return xmin, xmax, number_of_required_coefficients
+        return tmin, tmax, number_of_required_coefficients
    
 
     # Subroutine to update the view with the model values
     def update_view(self,heat_equation_model):
         # Update the view with the current model values 
         # Get the results from the model 
-        xmin = heat_equation_model.get_xmin()
-        xmax = heat_equation_model.get_xmax()
+        tmin = heat_equation_model.get_tmin()
+        tmax = heat_equation_model.get_tmax()
         number_of_required_coefficients = heat_equation_model.get_number_of_required_coefficients()
-        taylor_approximation_function = heat_equation_model.get_taylor_approximation_function()
-        analytic_function = heat_equation_model.get_analytic_function()
+        heat_approximation_function = heat_equation_model.get_heat_approximation_function()
+        initial_heat_approximation_function = heat_equation_model.get_initial_heat_approximation_function()
 
         # Plot the charge as a function of time 
-        self.plot_taylor_approximation_function(taylor_approximation_function,analytic_function, xmin, xmax, number_of_required_coefficients)
+        self.animate_heat_approximation_function(heat_approximation_function, initial_heat_approximation_function, tmin, tmax)
 
 
-    def plot_taylor_approximation_function(self, taylor_approximation_function, analytic_function, xmin, xmax, number_of_required_coefficients):
+
+
+
+
+    def animate_heat_approximation_function(self, heat_approximation_function,  initial_heat_approximation_function, tmin, tmax):
+        alpha=initial_heat_approximation_function 
+        f=heat_approximation_function
+
         # Generate the data for the charge curve
-        x_data = np.linspace(xmin, xmax, 1000)
-        y_taylor_data= [taylor_approximation_function(x) for x in x_data] 
-        y_analytic_data= analytic_function(x_data)
+        x_data = np.linspace(0, 1,350)
+        y_data = np.zeros_like(x_data)
+        z_data=np.array([alpha(x_data[k]) for k in range(len(x_data)-1)])
 
-        # Plot the taylor approximation curve
+        # Plot the heat approximation curve
         self.view.ax.clear()  # Clear the current plot
+        self.view.ax.set_title("Aproximación de la ecuación de calor")
+        bound = 10
+        norm = mcolors.Normalize(vmin=-bound, vmax=bound)
+        segments = [np.array([[x_data[k], y_data[k]], [x_data[k+1], y_data[k+1]]]) 
+            for k in range(len(x_data)-1)]
+        line_collection = LineCollection(segments, cmap=cmap, norm=norm, lw=10)
+        line_collection.set_array(z_data) # Set initial colors
+        self.view.ax.add_collection(line_collection)
+        self.view.ax.set_xlim(0, 1)
+        self.view.ax.set_ylim(-1, 1)
+        self.view.ax.axis("off")
 
-        # Plot the analytic curve
-        self.view.ax.plot(x_data, y_analytic_data, label=fr"$y = f(x)$")
+        if not hasattr(self, 'colorbar') or self.colorbar is None:
+            self.colorbar = self.view.fig.colorbar(line_collection, ax=self.view.ax, label="Temperatura")
 
-        self.view.ax.plot(x_data, y_taylor_data, label=fr"$y = T_{{{number_of_required_coefficients-1}}}f(x)$")
+        def update(frame):
+            dynamic_colors = np.array([f((x_data[k], frame/1000)) for k in range(len(x_data)-1)])
+            line_collection.set_array(dynamic_colors)
+            return line_collection,
 
+        FPS = 60
+        interval = 1000/FPS # Interval in milliseconds
+        frames = int((tmax-tmin)*FPS)
 
-        # Update the plot labels
-        self.view.ax.set_title(
-        fr"""Comparación de la función analítica vs la función generada por
-        aproximación utilizando series de Taylor con ${number_of_required_coefficients}$ coeficientes
-        """,
-        pad=5)
-        self.view.ax.set_xlabel("x", labelpad=10)
-        self.view.ax.set_ylabel("y", labelpad=10)
-        self.view.ax.legend()
+        self.heat_animation = FuncAnimation(self.view.fig, update, frames=frames, interval=interval, blit=False)
 
+ 
         self.view.canvas.draw()
 
     def show_error(self, title, message):
