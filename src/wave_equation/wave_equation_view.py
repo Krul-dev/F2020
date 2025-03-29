@@ -43,13 +43,15 @@ class WaveEquationView(QWidget):
         # Add a QLabel with instructions to the left panel
         left_text = """  
             <h2>Instrucciones</h2>
-            <p>Esta aplicación nos muestra la evolución de la ecuación del calor sobre una barra. </p>
-            <p>Para iniciar la animación basta con ingresar el valor del tiempo final (el tiempo inicial siempre será igual a 0) y el número de coeficientes que deseamos utilizar en nuestra aproximación</p>
+            <p>Esta aplicación nos muestra la evolución de la ecuación de onda sobre una barra. </p>
+            <p>Para nuestro modelos utilizaremos los coeficientes de la serie de Fourier calculados para aproximar la solución de la ecuación de onda. </p>
+            <p>Para iniciar la animación basta con ingresar el número de coeficientes que deseamos utilizar en nuestra aproximación.</p>
+            <p> Notemos que, con las condiciones de frontera dadas, la ecuación de onda siempre tendrá soluciones periódicas, las cuales podremos observar en la animación que se encuentra en el panel de la derecha.</p>
             """                                            # Text with instructions to display in the left panel
         instructions_label= QLabel(left_text)                     # Create a QLabel with the text
         instructions_label.setAlignment(Qt.AlignmentFlag.AlignTop) # Align the text to the top
         instructions_label.setWordWrap(True)                       # Enable text wrapping
-        left_panel.addWidget(instructions_label)                 # Add the QLabel to the left panel 
+        left_panel.addWidget(instructions_label,1)                 # Add the QLabel to the left panel 
 
         # Add a QFrame separator to the left panel 
         separator1 = QFrame()
@@ -65,13 +67,6 @@ class WaveEquationView(QWidget):
         # Add a form layout to the left panel to display the input fields 
         input_form_layout = QFormLayout() # Create a form layout
         input_form_layout.setLabelAlignment(Qt.AlignmentFlag.AlignRight)
-        xmin_label = QLabel("<p>Tiempo inicial:</p>") # Create a QLabel for the xmin input field 
-        self.xmin_fixed_label = QLabel("0")
-        input_form_layout.addRow(xmin_label, self.xmin_fixed_label) # Add the label and input field to the layout 
-        xmax_label = QLabel("<p>Tiempo final:</p>") # Create a QLabel for the xmax input field 
-        self.xmax_line_edit = QLineEdit("5") 
-        self.xmax_line_edit.setValidator(QDoubleValidator())  # Only allow numeric input 
-        input_form_layout.addRow(xmax_label, self.xmax_line_edit) # Add the label and input field to the layout 
         number_of_required_coefficients_label = QLabel("<p>Número de coeficientes:</p>") # Create a QLabel for the number of coefficients input field 
         self.number_of_required_coefficients_line_edit = QLineEdit("0") # Create a QLineEdit() widget
         self.number_of_required_coefficients_line_edit.setValidator(QIntValidator())  # Only allow numeric input 
@@ -82,7 +77,7 @@ class WaveEquationView(QWidget):
         self.submit_button = QPushButton("Calcular")  # Create a QPushButton
         # self.submit_button.setObjectName("Submit")  # Set the object name to "Submit"
         input_form_layout.addRow(self.submit_button)      # Add the button to the layout
-        left_panel.addLayout(input_form_layout) # Add the form layout to the left panel
+        left_panel.addLayout(input_form_layout,2) # Add the form layout to the left panel
 
         # Add a matplotlib plot to the right panel       
         self.fig, self.ax = plt.subplots(figsize=(12, 8)) # Create a figure and axis

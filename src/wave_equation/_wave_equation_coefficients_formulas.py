@@ -11,6 +11,10 @@ from scipy.special import factorial
 
 
 
-def Wave_Coefficient_Function(k):
+def Wave_Position_Coefficient_Function(k):
     c_k = ((5**k) * random.uniform(-1, 1))/factorial(k)
+    return c_k
+
+def Wave_Velocity_Coefficient_Function(k):
+    c_k = 0
     return c_k
