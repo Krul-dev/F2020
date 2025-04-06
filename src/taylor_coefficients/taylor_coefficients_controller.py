@@ -75,15 +75,15 @@ class TaylorCoefficientsController:
 
     def plot_taylor_approximation_function(self, taylor_approximation_function, analytic_function, xmin, xmax, number_of_required_coefficients):
         # Generate the data for the charge curve
-        x_data = np.linspace(xmin, xmax, 1000)
-        y_taylor_data= [taylor_approximation_function(x) for x in x_data] 
-        y_analytic_data= analytic_function(x_data)
+        x_data = np.linspace(xmin, xmax, 1000)             # Create an array of x values
+        y_taylor_data= [taylor_approximation_function(x) for x in x_data]  # Calculate the y values using the taylor approximation function
+        y_analytic_data= analytic_function(x_data) # Calculate the y values using the analytic function 
 
         # Plot the taylor approximation curve
         self.view.ax.clear()  # Clear the current plot
 
         # Plot the analytic curve
-        self.view.ax.plot(x_data, y_analytic_data, label=fr"$y = f(x)$")
+        self.view.ax.plot(x_data, y_analytic_data, label=fr"$y = f(x)$")  # Plot the analytic function
 
         self.view.ax.plot(x_data, y_taylor_data, label=fr"$y = T_{{{number_of_required_coefficients-1}}}f(x)$")
 
