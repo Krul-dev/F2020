@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "F2020"
 version = "0.1.0"
-description = "A project for solving differential equations using Taylor series."
+description = "Paquete de apoyo para el curso F2020 Ecuaciones Diferenciales para la Física"
 authors = [
   { name = "Raul Gomez", email = "rgomez@tec.mx" }
 ]
