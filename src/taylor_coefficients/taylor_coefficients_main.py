@@ -17,7 +17,7 @@ def main():
     taylor_coefficients_view = TaylorCoefficientsView()
 
     # Create the controller and connect it to the view
-    taylor_coefficients_controller=TaylorCoefficientsController(taylor_coefficients_view)
+    taylor_coefficients_controller = TaylorCoefficientsController(taylor_coefficients_view)
 
     # Show the view
     taylor_coefficients_view.show()
