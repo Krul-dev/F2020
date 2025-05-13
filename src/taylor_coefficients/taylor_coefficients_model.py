@@ -35,10 +35,12 @@ def generate_taylor_approximation_function(
 
 # Define the TaylorCoefficientsModel class
 class TaylorCoefficientsModel:
-    def __init__(self, xmin, xmax, number_of_required_coefficients):
+    def __init__(self, xmin, xmax, ymin, ymax, number_of_required_coefficients):
        # Set the default values for the time range and the x-axis limits
         self.xmin = xmin
         self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
         self.number_of_required_coefficients = number_of_required_coefficients
         self.taylor_approximation_function = generate_taylor_approximation_function(
             Taylor_Coefficient_Function, number_of_required_coefficients)
@@ -50,6 +52,12 @@ class TaylorCoefficientsModel:
 
     def get_xmax(self):
         return self.xmax
+
+    def get_ymin(self):
+        return self.ymin
+
+    def get_ymax(self):
+        return self.ymax
 
     def get_number_of_required_coefficients(self):
         return self.number_of_required_coefficients

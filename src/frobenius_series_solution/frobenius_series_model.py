@@ -42,10 +42,12 @@ def generate_frobenius_approximation_function(initial_coefficient_list, number_o
 
 # Define the FrobeniusSeriesModel class
 class FrobeniusSeriesModel:
-    def __init__(self, xmin, xmax, initial_coefficient_list, number_of_required_coefficients):
+    def __init__(self, xmin, xmax, ymin, ymax, initial_coefficient_list, number_of_required_coefficients):
        # Set the default values for the time range and the x-axis limits
         self.xmin = xmin
         self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
         self.number_of_required_coefficients = number_of_required_coefficients
         self.frobenius_approximation_function = generate_frobenius_approximation_function(
             initial_coefficient_list, number_of_required_coefficients)
@@ -56,6 +58,12 @@ class FrobeniusSeriesModel:
 
     def get_xmax(self):
         return self.xmax
+
+    def get_ymin(self):
+        return self.ymin
+
+    def get_ymax(self):
+        return self.ymax
 
     def get_number_of_required_coefficients(self):
         return self.number_of_required_coefficients

@@ -48,7 +48,7 @@ class FrobeniusSeriesView(QWidget):
         left_text = """
             <h2>Instrucciones</h2>
             <p>Esta aplicación nos muestra la gráfica de la solución aproximada a nuestra ecuación diferencial utilizando series de Frobenius.</p>
-            <p> Para generar la gráfica, necesitamos el rango de los valores de <i>x</i>, los coeficientes iniciales y el número de coeficientes requeridos.</p>
+            <p> Para generar la gráfica, necesitamos el rango de los valores de <i>x</i>, el rango de los valores de <i>y</i>, los coeficientes iniciales y el número de coeficientes requeridos.</p>
             <p> Usando el índice obtenido al resolver la ecuación indicial, la relación de recurrencia y los valores de los coeficientes iniciales, este programa calcula el número de coeficientes requeridos para generar una aproximación a nuestra solución a la ecuación diferencial utilizando series de Frobenius.</p>
             """                    # Text with instructions to display in the left panel
         instructions_label = QLabel(
@@ -90,6 +90,21 @@ class FrobeniusSeriesView(QWidget):
             QDoubleValidator())  # Only allow numeric input
         # Add the label and input field to the layout
         input_form_layout.addRow(xmax_label, self.xmax_line_edit)
+        # Create a QLabel for the ymin input field
+        ymin_label = QLabel("<p>Valor mínimo de y:</p>")
+        self.ymin_line_edit = QLineEdit("-5")
+        self.ymin_line_edit.setValidator(
+            QDoubleValidator())  # Only allow numeric input
+        # Add the label and input field to the layout
+        input_form_layout.addRow(ymin_label, self.ymin_line_edit)
+        # Create a QLabel for the xmax input field
+        ymax_label = QLabel("<p>Valor máximo de y:</p>")
+        self.ymax_line_edit = QLineEdit("5")
+        self.ymax_line_edit.setValidator(
+            QDoubleValidator())  # Only allow numeric input
+        # Add the label and input field to the layout
+        input_form_layout.addRow(ymax_label, self.ymax_line_edit)
+
         self.coefficient_inputs = []  # Create a list to store the input widgets
         coefficient_input_labels = [
             f"<p>c<sub>{k}</sub>:</p>" for k in range(NUMBER_OF_INITIAL_COEFFICIENTS)
