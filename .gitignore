@@ -10,7 +10,6 @@ venv/
 # Ignore build and distribution files
 build/
 dist/
-dist_zip/
 *.egg-info/
 
 # Ignore IDE/editor files
