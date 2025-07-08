@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import QApplication
 from taylor_series_solution.taylor_series_view import TaylorSeriesView
 from taylor_series_solution.taylor_series_controller import TaylorSeriesController
 
+
 def main():
     app = QApplication(sys.argv)  # Initialize the application
 
@@ -17,7 +18,7 @@ def main():
     taylor_series_view = TaylorSeriesView()
 
     # Create the controller and connect it to the view
-    taylor_series_controller=TaylorSeriesController(taylor_series_view)
+    taylor_series_controller = TaylorSeriesController(taylor_series_view)
 
     # Show the view
     taylor_series_view.show()
@@ -25,6 +26,6 @@ def main():
     # Start the application's event loop
     sys.exit(app.exec())
 
+
 if __name__ == "__main__":
     main()
-
